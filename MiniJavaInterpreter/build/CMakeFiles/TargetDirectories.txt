@@ -1,3 +1,0 @@
-/home/iusupov/compilers/MiniJavaInterpreter/build/CMakeFiles/rebuild_cache.dir
-/home/iusupov/compilers/MiniJavaInterpreter/build/CMakeFiles/MiniJavaArithmeticalInterpreter.dir
-/home/iusupov/compilers/MiniJavaInterpreter/build/CMakeFiles/edit_cache.dir
