@@ -1,0 +1,1 @@
+docker run -t -d --rm --name compilers_docker -v $(pwd):/home/$(whoami)/compilers compilers_image
