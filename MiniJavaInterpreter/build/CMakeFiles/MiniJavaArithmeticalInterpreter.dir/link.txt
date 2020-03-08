@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/MiniJavaArithmeticalInterpreter.dir/main.cpp.o CMakeFiles/MiniJavaArithmeticalInterpreter.dir/driver.cpp.o CMakeFiles/MiniJavaArithmeticalInterpreter.dir/parser.cpp.o CMakeFiles/MiniJavaArithmeticalInterpreter.dir/scanner.cpp.o  -o MiniJavaArithmeticalInterpreter 
