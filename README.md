@@ -1,4 +1,3 @@
-title: "Hi there"
 # MiniJava compiler
 This is education project.
 
