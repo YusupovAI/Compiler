@@ -52,7 +52,7 @@ static yy::parser::symbol_type yylex(Scanner &scanner, Driver& driver) {
 }
 
 
-#line 56 "/home/iusupov/compilers/MiniJavaInterpreter/parser.cpp"
+#line 56 "/home/iusupov/compilers/ArithmeticalInterpreter/parser.cpp"
 
 
 #ifndef YY_
@@ -143,7 +143,7 @@ static yy::parser::symbol_type yylex(Scanner &scanner, Driver& driver) {
 #define YYRECOVERING()  (!!yyerrstatus_)
 
 namespace yy {
-#line 147 "/home/iusupov/compilers/MiniJavaInterpreter/parser.cpp"
+#line 147 "/home/iusupov/compilers/ArithmeticalInterpreter/parser.cpp"
 
 
   /* Return YYSTR after stripping away unnecessary quotes and
@@ -618,7 +618,7 @@ namespace yy {
                                               {
     std::cout << yystack_[2].value.as < int > () << '\n';
   }
-#line 622 "/home/iusupov/compilers/MiniJavaInterpreter/parser.cpp"
+#line 622 "/home/iusupov/compilers/ArithmeticalInterpreter/parser.cpp"
     break;
 
   case 6:
@@ -629,76 +629,87 @@ namespace yy {
     }
     driver.SetVariableValue(yystack_[1].value.as < std::string > (), 0);
   }
-#line 633 "/home/iusupov/compilers/MiniJavaInterpreter/parser.cpp"
+#line 633 "/home/iusupov/compilers/ArithmeticalInterpreter/parser.cpp"
     break;
 
   case 7:
 #line 91 "parser.y"
+                                        {
+    if (driver.ContainsVariable(yystack_[3].value.as < std::string > ())) {
+      throw std::logic_error("Redeclaration of variable");
+    }
+    driver.SetVariableValue(yystack_[3].value.as < std::string > (), yystack_[1].value.as < int > ());
+  }
+#line 644 "/home/iusupov/compilers/ArithmeticalInterpreter/parser.cpp"
+    break;
+
+  case 8:
+#line 97 "parser.y"
                                   {
     if (!driver.ContainsVariable(yystack_[3].value.as < std::string > ())) {
       throw std::logic_error("Usage of undeclared variable");  
     }
     driver.SetVariableValue(yystack_[3].value.as < std::string > (), yystack_[1].value.as < int > ());
   }
-#line 644 "/home/iusupov/compilers/MiniJavaInterpreter/parser.cpp"
-    break;
-
-  case 8:
-#line 102 "parser.y"
-    { yylhs.value.as < int > () = yystack_[0].value.as < int > (); }
-#line 650 "/home/iusupov/compilers/MiniJavaInterpreter/parser.cpp"
+#line 655 "/home/iusupov/compilers/ArithmeticalInterpreter/parser.cpp"
     break;
 
   case 9:
-#line 103 "parser.y"
-                 {
-      yylhs.value.as < int > () = driver.GetVariableValue(yystack_[0].value.as < std::string > ());
-    }
-#line 658 "/home/iusupov/compilers/MiniJavaInterpreter/parser.cpp"
+#line 108 "parser.y"
+    { yylhs.value.as < int > () = yystack_[0].value.as < int > (); }
+#line 661 "/home/iusupov/compilers/ArithmeticalInterpreter/parser.cpp"
     break;
 
   case 10:
-#line 106 "parser.y"
-                              {
-      yylhs.value.as < int > () = yystack_[2].value.as < int > () + yystack_[0].value.as < int > (); 
+#line 109 "parser.y"
+                 {
+      yylhs.value.as < int > () = driver.GetVariableValue(yystack_[0].value.as < std::string > ());
     }
-#line 666 "/home/iusupov/compilers/MiniJavaInterpreter/parser.cpp"
+#line 669 "/home/iusupov/compilers/ArithmeticalInterpreter/parser.cpp"
     break;
 
   case 11:
-#line 109 "parser.y"
+#line 112 "parser.y"
                               {
-      yylhs.value.as < int > () = yystack_[2].value.as < int > () - yystack_[0].value.as < int > (); 
+      yylhs.value.as < int > () = yystack_[2].value.as < int > () + yystack_[0].value.as < int > (); 
     }
-#line 674 "/home/iusupov/compilers/MiniJavaInterpreter/parser.cpp"
+#line 677 "/home/iusupov/compilers/ArithmeticalInterpreter/parser.cpp"
     break;
 
   case 12:
-#line 112 "parser.y"
+#line 115 "parser.y"
                               {
-      yylhs.value.as < int > () = yystack_[2].value.as < int > () * yystack_[0].value.as < int > (); 
+      yylhs.value.as < int > () = yystack_[2].value.as < int > () - yystack_[0].value.as < int > (); 
     }
-#line 682 "/home/iusupov/compilers/MiniJavaInterpreter/parser.cpp"
+#line 685 "/home/iusupov/compilers/ArithmeticalInterpreter/parser.cpp"
     break;
 
   case 13:
-#line 115 "parser.y"
+#line 118 "parser.y"
                               {
-      yylhs.value.as < int > () = yystack_[2].value.as < int > () / yystack_[0].value.as < int > (); 
+      yylhs.value.as < int > () = yystack_[2].value.as < int > () * yystack_[0].value.as < int > (); 
     }
-#line 690 "/home/iusupov/compilers/MiniJavaInterpreter/parser.cpp"
+#line 693 "/home/iusupov/compilers/ArithmeticalInterpreter/parser.cpp"
     break;
 
   case 14:
-#line 118 "parser.y"
+#line 121 "parser.y"
+                              {
+      yylhs.value.as < int > () = yystack_[2].value.as < int > () / yystack_[0].value.as < int > (); 
+    }
+#line 701 "/home/iusupov/compilers/ArithmeticalInterpreter/parser.cpp"
+    break;
+
+  case 15:
+#line 124 "parser.y"
                        {
       yylhs.value.as < int > () = yystack_[1].value.as < int > (); 
     }
-#line 698 "/home/iusupov/compilers/MiniJavaInterpreter/parser.cpp"
+#line 709 "/home/iusupov/compilers/ArithmeticalInterpreter/parser.cpp"
     break;
 
 
-#line 702 "/home/iusupov/compilers/MiniJavaInterpreter/parser.cpp"
+#line 713 "/home/iusupov/compilers/ArithmeticalInterpreter/parser.cpp"
 
             default:
               break;
@@ -976,11 +987,11 @@ namespace yy {
   const signed char
   parser::yypact_[] =
   {
-       7,   -15,    23,    -2,   -21,    20,    24,    19,    25,    27,
-      28,    26,    14,    30,    22,    31,    29,    14,    -4,    32,
-      -4,    33,   -21,    -4,   -21,   -21,    15,   -21,     2,   -21,
-      21,    -4,    -4,    -4,    -4,    34,   -21,   -21,    -5,    -5,
-     -21,   -21,   -21
+      -1,    -2,    32,    13,   -21,    27,    31,    29,    33,    36,
+      37,    28,   -14,    40,    35,    39,    38,   -14,    -4,     9,
+      -4,    41,   -21,    -4,   -21,   -21,    22,    -4,   -21,     4,
+     -21,    30,    -4,    -4,    -4,    -4,    42,    17,   -21,   -21,
+      34,    34,   -21,   -21,   -21,   -21
   };
 
   const signed char
@@ -988,15 +999,15 @@ namespace yy {
   {
        0,     0,     0,     0,     1,     0,     0,     0,     0,     0,
        0,     0,     3,     0,     0,     0,     0,     3,     0,     0,
-       0,     0,     4,     0,     9,     8,     0,     6,     0,     2,
-       0,     0,     0,     0,     0,     0,     7,    14,    11,    10,
-      13,    12,     5
+       0,     0,     4,     0,    10,     9,     0,     0,     6,     0,
+       2,     0,     0,     0,     0,     0,     0,     0,     8,    15,
+      12,    11,    14,    13,     5,     7
   };
 
   const signed char
   parser::yypgoto_[] =
   {
-     -21,   -20,   -21,    35,   -21
+     -21,   -20,   -21,    43,   -21
   };
 
   const signed char
@@ -1008,23 +1019,25 @@ namespace yy {
   const signed char
   parser::yytable_[] =
   {
-      28,    33,    34,    30,    23,     3,    31,    32,    33,    34,
-       1,    38,    39,    40,    41,     5,    24,    25,    36,    31,
-      32,    33,    34,     4,    35,    31,    32,    33,    34,    13,
-      37,     6,     8,    14,    15,    10,     7,    11,    18,     9,
-       0,    20,    19,    12,     0,     0,     0,    21,    27,     0,
-      42,    29,    22
+      29,    13,     1,    31,    23,    14,    15,    37,    32,    33,
+      34,    35,    40,    41,    42,    43,    24,    25,     3,    27,
+      38,    32,    33,    34,    35,    28,    32,    33,    34,    35,
+       5,    36,     4,    45,    32,    33,    34,    35,     6,    39,
+      34,    35,     8,     7,    10,    12,    11,     9,    18,    20,
+       0,     0,     0,     0,     0,    19,    21,     0,    44,    30,
+      22
   };
 
   const signed char
   parser::yycheck_[] =
   {
-      20,     6,     7,    23,     8,    20,     4,     5,     6,     7,
-       3,    31,    32,    33,    34,    17,    20,    21,    16,     4,
-       5,     6,     7,     0,     9,     4,     5,     6,     7,    15,
-       9,    11,    13,    19,    20,     8,    12,     9,     8,    14,
-      -1,    10,    20,    17,    -1,    -1,    -1,    18,    16,    -1,
-      16,    18,    17
+      20,    15,     3,    23,     8,    19,    20,    27,     4,     5,
+       6,     7,    32,    33,    34,    35,    20,    21,    20,    10,
+      16,     4,     5,     6,     7,    16,     4,     5,     6,     7,
+      17,     9,     0,    16,     4,     5,     6,     7,    11,     9,
+       6,     7,    13,    12,     8,    17,     9,    14,     8,    10,
+      -1,    -1,    -1,    -1,    -1,    20,    18,    -1,    16,    18,
+      17
   };
 
   const signed char
@@ -1032,23 +1045,23 @@ namespace yy {
   {
        0,     3,    24,    20,     0,    17,    11,    12,    13,    14,
        8,     9,    17,    15,    19,    20,    25,    26,     8,    20,
-      10,    18,    25,     8,    20,    21,    23,    16,    23,    18,
-      23,     4,     5,     6,     7,     9,    16,     9,    23,    23,
-      23,    23,    16
+      10,    18,    25,     8,    20,    21,    23,    10,    16,    23,
+      18,    23,     4,     5,     6,     7,     9,    23,    16,     9,
+      23,    23,    23,    23,    16,    16
   };
 
   const signed char
   parser::yyr1_[] =
   {
-       0,    22,    24,    25,    25,    26,    26,    26,    23,    23,
-      23,    23,    23,    23,    23
+       0,    22,    24,    25,    25,    26,    26,    26,    26,    23,
+      23,    23,    23,    23,    23,    23
   };
 
   const signed char
   parser::yyr2_[] =
   {
-       0,     2,    13,     0,     2,     5,     3,     4,     1,     1,
-       3,     3,     3,     3,     3
+       0,     2,    13,     0,     2,     5,     3,     5,     4,     1,
+       1,     3,     3,     3,     3,     3
   };
 
 
@@ -1069,8 +1082,8 @@ namespace yy {
   const signed char
   parser::yyrline_[] =
   {
-       0,    71,    71,    78,    79,    82,    85,    91,   102,   103,
-     106,   109,   112,   115,   118
+       0,    71,    71,    78,    79,    82,    85,    91,    97,   108,
+     109,   112,   115,   118,   121,   124
   };
 
   // Print the state stack on the debug stream.
@@ -1104,9 +1117,9 @@ namespace yy {
 
 
 } // yy
-#line 1108 "/home/iusupov/compilers/MiniJavaInterpreter/parser.cpp"
+#line 1121 "/home/iusupov/compilers/ArithmeticalInterpreter/parser.cpp"
 
-#line 122 "parser.y"
+#line 128 "parser.y"
 
 
 void

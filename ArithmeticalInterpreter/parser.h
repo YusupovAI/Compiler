@@ -32,7 +32,7 @@
 
 
 /**
- ** \file /home/iusupov/compilers/MiniJavaInterpreter/parser.h
+ ** \file /home/iusupov/compilers/ArithmeticalInterpreter/parser.h
  ** Define the yy::parser class.
  */
 
@@ -41,8 +41,8 @@
 // Undocumented macros, especially those whose name start with YY_,
 // are private implementation details.  Do not rely on them.
 
-#ifndef YY_YY_HOME_IUSUPOV_COMPILERS_MINIJAVAINTERPRETER_PARSER_H_INCLUDED
-# define YY_YY_HOME_IUSUPOV_COMPILERS_MINIJAVAINTERPRETER_PARSER_H_INCLUDED
+#ifndef YY_YY_HOME_IUSUPOV_COMPILERS_ARITHMETICALINTERPRETER_PARSER_H_INCLUDED
+# define YY_YY_HOME_IUSUPOV_COMPILERS_ARITHMETICALINTERPRETER_PARSER_H_INCLUDED
 // "%code requires" blocks.
 #line 9 "parser.y"
 
@@ -55,7 +55,7 @@ class Driver;
 class Value;
 
 
-#line 59 "/home/iusupov/compilers/MiniJavaInterpreter/parser.h"
+#line 59 "/home/iusupov/compilers/ArithmeticalInterpreter/parser.h"
 
 # include <cassert>
 # include <cstdlib> // std::abort
@@ -189,7 +189,7 @@ class Value;
 #endif
 
 namespace yy {
-#line 193 "/home/iusupov/compilers/MiniJavaInterpreter/parser.h"
+#line 193 "/home/iusupov/compilers/ArithmeticalInterpreter/parser.h"
 
 
 
@@ -1331,7 +1331,7 @@ switch (yytype)
     enum
     {
       yyeof_ = 0,
-      yylast_ = 52,     ///< Last index in yytable_.
+      yylast_ = 60,     ///< Last index in yytable_.
       yynnts_ = 5,  ///< Number of nonterminal symbols.
       yyfinal_ = 4, ///< Termination state number.
       yyntokens_ = 22  ///< Number of tokens.
@@ -1521,10 +1521,10 @@ switch (yytype)
   }
 
 } // yy
-#line 1525 "/home/iusupov/compilers/MiniJavaInterpreter/parser.h"
+#line 1525 "/home/iusupov/compilers/ArithmeticalInterpreter/parser.h"
 
 
 
 
 
-#endif // !YY_YY_HOME_IUSUPOV_COMPILERS_MINIJAVAINTERPRETER_PARSER_H_INCLUDED
+#endif // !YY_YY_HOME_IUSUPOV_COMPILERS_ARITHMETICALINTERPRETER_PARSER_H_INCLUDED
