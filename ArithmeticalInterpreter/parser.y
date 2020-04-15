@@ -88,6 +88,12 @@ statement:
     }
     driver.SetVariableValue($2, 0);
   } |
+  "int" "identifier" "=" expression ";" {
+    if (driver.ContainsVariable($2)) {
+      throw std::logic_error("Redeclaration of variable");
+    }
+    driver.SetVariableValue($2, $4);
+  } |
   "identifier" "=" expression ";" {
     if (!driver.ContainsVariable($1)) {
       throw std::logic_error("Usage of undeclared variable");  
