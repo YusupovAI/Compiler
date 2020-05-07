@@ -1,0 +1,12 @@
+class MainClass {
+  public static void main() {
+    TestClass a;
+    a = new TestClass();
+    a.FunctionDefinition(1);
+  }
+}
+class TestClass {
+  public int FunctionDefinition(int x) {
+    return y;
+  }
+}

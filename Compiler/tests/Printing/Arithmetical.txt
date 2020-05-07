@@ -1,0 +1,10 @@
+class MainClass {
+  public static void main() {
+    int x;
+    int y;
+    int plus = x + y;
+    minus = x - y;
+    div = x / y;
+    mod = x % y;
+  }
+}
