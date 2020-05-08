@@ -2,7 +2,8 @@ class Main {
     public static void main() {
         int x;
         int y;
-        int z = 10 + 1;
+        int z;
+        z = 10 + 1;
         x = 0;
         System.out.println(x);
         y = z * x;
