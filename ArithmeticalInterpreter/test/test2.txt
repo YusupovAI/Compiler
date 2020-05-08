@@ -1,6 +1,7 @@
 class Main {
     public static void main() {
-        int xx = 10;
+        int xx;
+        xx = 10;
         System.out.println(xx);
         xx = xx + 1;
         System.out.println(xx);
