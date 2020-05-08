@@ -173,13 +173,13 @@ ttype:
 
 simple_type:
   "int" {
-    $$ = std::make_unique<SimpleType>(SimpleType::Int);
-  } |
-  "boolean" {
-    $$ = std::make_unique<SimpleType>(SimpleType::Boolean);
+    $$ = std::make_unique<SimpleType>("int");
   } |
   "void" {
-    $$ = std::make_unique<SimpleType>(SimpleType::Void);
+    $$ = std::make_unique<SimpleType>("void");
+  } |
+  "boolean" {
+    $$ = std::make_unique<SimpleType>("boolean");
   } |
   "identifier" {
     $$ = std::make_unique<SimpleType>(std::move($1));
@@ -373,5 +373,6 @@ expression:
 void
 yy::parser::error(const location_type& l, const std::string& m)
 {
-  std::cerr << l << ": " << m << '\n';
+  std::cerr << l << ": " << m << std::endl;
+  throw std::runtime_error("Syntax error");
 }

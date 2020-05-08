@@ -1,20 +1,13 @@
 #pragma once
 
 #include "Visitor.h"
-
-#include <iostream>
 #include <string>
-#include <deque>
-#include <memory>
-
-#include "ScopeLayer.h"
-#include "Object.h"
 
 namespace AST {
 
-class MainInterpreter : public Visitor {
+class TypeGetter : public Visitor {
  public:
-  MainInterpreter(std::ostream&);
+  [[nodiscard]] const std::string& GetType() const;
 
   void Visit(const ExpressionAdd&);
   void Visit(const ExpressionSub&);
@@ -72,10 +65,7 @@ class MainInterpreter : public Visitor {
   void Visit(const SimpleLValue&);
 
  private:
-  Object tos_value_{};
-  bool returned_{false};
-  std::ostream& out_;
-  std::deque<ScopeLayer> layers_;
+  std::string type_;
 };
 
-} // namespace AST
+}

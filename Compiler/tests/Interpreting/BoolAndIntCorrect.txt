@@ -1,0 +1,12 @@
+class Main {
+
+public static void main() {
+    int y;
+    y = 10;
+    boolean x;
+    x = true;
+    if (x) {
+        System.out.println(y);
+    }
+}
+}

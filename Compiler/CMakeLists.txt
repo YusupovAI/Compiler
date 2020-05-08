@@ -47,7 +47,10 @@ target_include_directories(
   Method
   Statement
   Type
-  Visitor)
+  Visitor
+  Scopes
+  Object
+)
 
 target_sources(
   ${PROJECT_NAME}
@@ -112,4 +115,9 @@ target_sources(
   Expression/ExpressionNumber.cpp
   Visitor/TreePrinter.cpp
   Visitor/MainInterpreter.cpp
+  Scopes/ScopeLayer.cpp
+  Object/Object.cpp
+  Object/BooleanValue.cpp
+  Object/IntegerValue.cpp
+  Visitor/TypeGetter.cpp
 )

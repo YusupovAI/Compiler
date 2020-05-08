@@ -379,23 +379,7 @@ void TreePrinter::Visit(const ExpressionNumber& exp) {
 void TreePrinter::Visit(const SimpleType& simple) {
   SpaceWrapper wrap(out_, space_count_);
   out_ << "SimpleType ==> ";
-  auto result = simple.GetType();
-  try {
-    SimpleType::Primitive primitive = std::get<SimpleType::Primitive>(result);
-    if (primitive == SimpleType::Primitive::Boolean) {
-      out_ << "Boolean";
-    }
-    if (primitive == SimpleType::Primitive::Int) {
-      out_ << "Int";
-    }
-    if (primitive == SimpleType::Primitive::Void) {
-      out_ << "Void";
-    }
-    out_ << '\n';
-  } catch(...) {
-    auto type_name = std::get<std::string>(result);
-    out_ << type_name << '\n';
-  }
+  out_ << simple.GetType() << '\n';
 }
 
 void TreePrinter::Visit(const ArrayElementLValue& lv) {
