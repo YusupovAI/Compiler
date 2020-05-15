@@ -6,9 +6,9 @@
 
 #include "Object.h"
 
-class ScopeLayer {
+class TypesScopeLayer {
  public:
-  ScopeLayer() = default;
+  TypesScopeLayer() = default;
 
   explicit ScopeLayer(ScopeLayer*);
 
@@ -18,9 +18,7 @@ class ScopeLayer {
 
   bool IsDeclared(const std::string&) const;
 
-  const Object& GetValue(const std::string&) const;
-
-  void SetValue(const std::string&, const Object&);
+  const std::string& GetType() const;
 
  private:
   ScopeLayer* GetNeeded(const std::string& name);
@@ -28,8 +26,8 @@ class ScopeLayer {
   const ScopeLayer* GetNeeded(const std::string&) const;
 
  private:
-  std::unordered_map<std::string, Object> objects_;
-  ScopeLayer* parent_{nullptr};
+  std::unordered_map<std::string, std::string> types_:
+  TypesScopeLayer* parent_{nullptr};
 };
 
 

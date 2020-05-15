@@ -7,8 +7,10 @@
 #include <deque>
 #include <memory>
 
-#include "ScopeLayer.h"
-#include "Object.h"
+#include "TypesScopeLayer.h"
+#include "SymbolTable.h"
+#include "ClassManagerCreator.h"
+#include "FunctionManagerCreator.h"
 
 namespace AST {
 

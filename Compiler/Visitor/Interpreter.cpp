@@ -1,4 +1,4 @@
-#include "ScopeLayer.h"
+#include "TypesScopeLayer.h"
 #include "IntegerValue.h"
 #include "Object.h"
 #include "MainInterpreter.h"
@@ -234,7 +234,7 @@ void MainInterpreter::Visit(const StatementIfFull& stmt) {
   if (GetBoolean(tos_value_)) {
     stmt.GetTrueBody()->Accept(*this);
   } else {
-    stmt.GetFlaseBody()->Accept(*this);
+    stmt.GetFalseBody()->Accept(*this);
   }
 }
 
