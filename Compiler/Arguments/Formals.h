@@ -9,6 +9,7 @@ namespace AST {
 class Formals : public TreeNode {
  public:
   Formals() = default;
+
   Formals(std::unique_ptr<Type>&& head_type, std::string&& head_name, std::unique_ptr<Formals>&& tail);
 
   void Accept(Visitor& visitor) const override;

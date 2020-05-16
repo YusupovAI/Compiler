@@ -2,9 +2,11 @@
 
 #include "Visitor.h"
 
- class FieldOrMethodVisitor : public AST::Visitor {
+ class FieldVisitor : public AST::Visitor {
   public:
-   void Visit(const AST::ExpressionAdoverride;
+    static const AST::VariableDeclaration* GetVariable(const AST::Declaration&);
+
+   void Visit(const AST::ExpressionAdd&) override;
    void Visit(const AST::ExpressionSub&) override;
    void Visit(const AST::ExpressionMul&) override;
    void Visit(const AST::ExpressionDiv&) override;
@@ -54,4 +56,7 @@
    void Visit(const AST::ExpressionNumber&) override;
    void Visit(const AST::ArrayElementLValue&)override;
    void Visit(const AST::SimpleLValue&) override;
+
+  private:
+   const AST::VariableDeclaration* var_;
 };

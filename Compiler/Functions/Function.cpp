@@ -1,28 +1,42 @@
-#include "FunctionSignature.h"
-#include "TypeGetter.h"
+#include "Function.h"
 
-FunctionSignature::FunctionSignature(std::vector<Type> types, std::vector<std::string> formals)
-: types_(std::move(types)),
-formals_(std::move(formals)){}
+Function::Function(
+    std::string returning_type,
+    std::vector<Type> types,
+    std::vector<std::string> formals,
+    const AST::StatementList& statements)
+: returning_type_(std::move(returning_type)),
+types_(std::move(types)),
+formals_(std::move(formals)),
+statements_(statements) {}
 
-const std::vector<typename FunctionSignature::Type> &FunctionSignature::GetTypes() const {
+const std::vector<typename Function::Type> &Function::GetTypes() const {
   return types_;
 }
 
-const std::vector<std::string>& FunctionSignature::Formals() const {
+const std::vector<std::string>& Function::GetFormals() const {
   return formals_;
 }
 
-FunctionSignature FunctionSignature::MakeFunction(AST::MethodDeclaration &decl) {
+Function Function::MakeFunction(const std::string& class_name, const AST::MethodDeclaration &decl) {
   auto head = decl.GetFormals().get();
-  std::vector<typename FunctionSignature::Type> types;
+  std::vector<typename Function::Type> types;
   std::vector<std::string> formals;
-  AST::TypeGetter resolver;
   while (head->GetHeadType() != nullptr) {
-    head->GetHeadType()->Accept(resolver);
-    types.push_back(resolver.GetType());
+    types.push_back(head->GetHeadType()->GetType());
     formals.push_back(head->GetHeadName());
     head = head->GetTail().get();
   }
-  return {std::move(types), std::move(formals)};
+  return Function(decl.GetReturnType()->GetType(),
+          std::move(types),
+          std::move(formals),
+          *decl.GetStatements());
+}
+
+const std::string &Function::GetReturningType() const {
+  return returning_type_;
+}
+
+const AST::StatementList &Function::GetStatements() const {
+  return statements_;
 }

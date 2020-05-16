@@ -1,60 +1,52 @@
-#include "ScopeLayer.h"
+#include "TypesScopeLayer.h"
 
 #include <stdexcept>
 
-bool ScopeLayer::HasValue(const std::string& name) const {
-  auto needed =  GetNeeded(name);
-  if (needed->objects_.find(name) != needed->objects_.end()) {
-    return needed->objects_.find(name)->second.HasValue();
+
+void TypesScopeLayer::DeclareVariable(const std::string &name, const std::string &typ) {
+  if (types_.find(name) != types_.end()) {
+    throw std::logic_error("Variable" + name + " was previously declared");
   }
+  types_[name] = {false, typ};
 }
-
-void ScopeLayer::DeclareVariable(const std::string& name, const std::string& typ) {
-  if (IsDeclared(name)) {
-    throw std::logic_error("Variable was previously declared");
-  }
-  objects_[name] = Object(typ);
+bool TypesScopeLayer::IsDeclared(const std::string &name) const {
+  return GetNeeded(name) != nullptr;
 }
-
-bool ScopeLayer::IsDeclared(const std::string& name) const {
-  return objects_.find(name) != objects_.end();
-}
-
-const Object& ScopeLayer::GetValue(const std::string& name) const {
-  if (!HasValue(name)) {
-    throw std::logic_error("Variable was not declared in scopes");
-  }
-  return GetNeeded(name)->objects_.find(name)->second;
-}
-
-ScopeLayer* ScopeLayer::GetNeeded(const std::string &name) {
-  auto current = this;
-  while (current != nullptr) {
-    if (current->objects_.find(name) != current->objects_.end()) {
-      return current;
-    }
-    current = current->parent_;
-  }
-  return current;
-}
-
-const ScopeLayer* ScopeLayer::GetNeeded(const std::string &name) const {
-  auto current = this;
-  while (current != nullptr) {
-    if (current->objects_.find(name) != current->objects_.end()) {
-      return current;
-    }
-    current = current->parent_;
-  }
-  return current;
-}
-
-ScopeLayer::ScopeLayer(ScopeLayer *parent) : parent_(parent) {}
-
-void ScopeLayer::SetValue(const std::string& name, const Object & obj) {
-  auto current = GetNeeded(name);
+const std::string &TypesScopeLayer::GetType(const std::string& name) const {
+  const TypesScopeLayer* current = GetNeeded(name);
   if (current == nullptr) {
     throw std::logic_error("Usage of undeclared variable");
   }
-  current->objects_[name] = obj;
+  return current->types_.find(name)->second.second;
 }
+
+const TypesScopeLayer *TypesScopeLayer::GetNeeded(const std::string &name) const {
+  const TypesScopeLayer* current = this;
+  while (current != nullptr) {
+    if (current->types_.find(name) != current->types_.end()) {
+      return current;
+    }
+    current = current->parent_;
+  }
+  return nullptr;
+}
+
+bool TypesScopeLayer::IsInitialized(const std::string &name) const {
+  if (!IsDeclared(name)) {
+    throw std::logic_error("Variable " + name + " was not declared before usage");
+  }
+  return types_.find(name)->second.first;
+}
+
+void TypesScopeLayer::Initialize(const std::string &name) {
+  if (!IsDeclared((name))) {
+    throw std::logic_error("Variable " + name + " was not declared before usage");
+  }
+  types_.find(name)->second.first = true;
+}
+
+TypesScopeLayer *TypesScopeLayer::GetParent() const {
+  return parent_;
+}
+
+TypesScopeLayer::TypesScopeLayer(TypesScopeLayer *parent) : parent_(parent) {}

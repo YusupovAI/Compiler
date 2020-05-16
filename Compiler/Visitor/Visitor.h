@@ -38,9 +38,6 @@ class Visitor {
   virtual void Visit(const DeclarationMethod&) = 0;
   virtual void Visit(const VariableDeclaration&) = 0;
   virtual void Visit(const MethodDeclaration&) = 0;
-  virtual void Visit(const TypeSimple&) = 0;
-  virtual void Visit(const TypeArray&) = 0;
-  virtual void Visit(const ArrayType&) = 0;
   virtual void Visit(const Formals&) = 0;
   virtual void Visit(const MainClass&) = 0;
   virtual void Visit(const StatementAssert&) = 0;
@@ -58,9 +55,10 @@ class Visitor {
   virtual void Visit(const MethodInvocation&) = 0;
   virtual void Visit(const StatementList&) = 0;
   virtual void Visit(const ExpressionNumber&) = 0;
-  virtual void Visit(const SimpleType&) = 0;
   virtual void Visit(const ArrayElementLValue&) =0;
   virtual void Visit(const SimpleLValue&) = 0;
+  virtual void Visit(const Type&) = 0;
+
 
   virtual ~Visitor(){};
 };

@@ -1,16 +1,13 @@
-//
-// Created by iusupov on 11.05.2020.
-//
+#pragma once
 
-#ifndef AST_CLASSES_CLASSMANAGER_H_
-#define AST_CLASSES_CLASSMANAGER_H_
-
-
+#include <unordered_set>
 
 class ClassManager {
+ public:
+  void AddClass(const std::string& class_name);
 
+  bool HasClass(const std::string& class_name) const;
+
+ private:
+  std::unordered_set<std::string> classes_;
 };
-
-
-
-#endif //AST_CLASSES_CLASSMANAGER_H_

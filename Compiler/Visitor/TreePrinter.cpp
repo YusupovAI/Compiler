@@ -1,5 +1,7 @@
 #include "TreePrinter.h"
 
+#include "Class.h"
+
 namespace AST {
 
 class SpaceWrapper {
@@ -241,24 +243,6 @@ void TreePrinter::Visit(const MethodDeclaration& decl) {
   decl.GetStatements()->Accept(*this);
 }
 
-void TreePrinter::Visit(const TypeSimple& simple) {
-  SpaceWrapper wrap(out_, space_count_);
-  out_ << "Type ==> SimpleType\n";
-  simple.GetType()->Accept(*this);
-}
-
-void TreePrinter::Visit(const TypeArray& array) {
-  SpaceWrapper wrap(out_, space_count_);
-  out_ << "Type ==> ArrayType\n";
-  array.GetType()->Accept(*this);
-}
-
-void TreePrinter::Visit(const ArrayType& array) {
-  SpaceWrapper wrap(out_, space_count_);
-  out_ << "ArrayType ==> Type []\n";
-  array.GetType()->Accept(*this);
-}
-
 void TreePrinter::Visit(const Formals& formals) {
   SpaceWrapper wrap(out_, space_count_);
   if (formals.GetHeadName().empty()) {
@@ -306,7 +290,7 @@ void TreePrinter::Visit(const StatementIfFull& st) {
   out_ << "Statement ==> if ( Exp ) Statement else Statement\n";
   st.GetCondition()->Accept(*this);
   st.GetTrueBody()->Accept(*this);
-  st.GetFlaseBody()->Accept(*this);
+  st.GetFalseBody()->Accept(*this);
 }
 
 void TreePrinter::Visit(const StatementWhile& st) {
@@ -376,12 +360,6 @@ void TreePrinter::Visit(const ExpressionNumber& exp) {
   out_ << "Expression ==> " << exp.GetValue() << '\n';
 }
 
-void TreePrinter::Visit(const SimpleType& simple) {
-  SpaceWrapper wrap(out_, space_count_);
-  out_ << "SimpleType ==> ";
-  out_ << simple.GetType() << '\n';
-}
-
 void TreePrinter::Visit(const ArrayElementLValue& lv) {
   SpaceWrapper wrap(out_, space_count_);
   out_ << "ArrayElementLValue ==> Exp [ Exp ]\n";
@@ -392,6 +370,10 @@ void TreePrinter::Visit(const ArrayElementLValue& lv) {
 void TreePrinter::Visit(const SimpleLValue& lv) {
   SpaceWrapper wrap(out_, space_count_);
   out_ << "SimpleLValue ==> " << lv.GetVariableName() << '\n';
+}
+void TreePrinter::Visit(const Type &t) {
+  SpaceWrapper wrap(out_, space_count_);
+  out_ << t.GetType() << '\n';
 }
 
 } // namespace AST

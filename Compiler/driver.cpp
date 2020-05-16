@@ -1,8 +1,12 @@
 #include "driver.h"
 #include "TreePrinter.h"
-#include "MainInterpreter.h"
+#include "Interpreter.h"
+#include "TypeChecker.h"
+#include "FunctionManagerCreator.h"
+#include "ClassManagerCreator.h"
 
 #include <memory>
+#include <Visitor/Interpreter.h>
 
 Driver::Driver()
 : scanner_(*this),
@@ -30,8 +34,16 @@ void Driver::Drive() {
     TreePrinter printer(std::cout);
     program_->Accept(printer);
   }
+
+  auto function_manager = FunctionManagerCreator::MakeFunctionManager(*program_);
+  auto class_manager_ = ClassManagerCreator::MakeClassManager(*program_);
+  class_manager_.AddClass("int");
+  class_manager_.AddClass("boolean");
+  TypeChecker checker(function_manager, class_manager_);
+
+  program_->Accept(checker);
   if (interpreting_) {
-    MainInterpreter interpreter(std::cout);
+    AST::Interpreter interpreter(std::cout, function_manager, class_manager_);
     program_->Accept(interpreter);
   }
 }

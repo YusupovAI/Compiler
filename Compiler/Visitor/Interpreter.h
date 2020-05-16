@@ -4,19 +4,19 @@
 
 #include <iostream>
 #include <string>
-#include <deque>
+#include <stack>
 #include <memory>
 
 #include "TypesScopeLayer.h"
 #include "SymbolTable.h"
-#include "ClassManagerCreator.h"
-#include "FunctionManagerCreator.h"
+#include "ClassManager.h"
+#include "FunctionManager.h"
 
 namespace AST {
 
-class MainInterpreter : public Visitor {
+class Interpreter : public Visitor {
  public:
-  MainInterpreter(std::ostream&);
+  Interpreter(std::ostream&, const FunctionManager&, const ClassManager&);
 
   void Visit(const ExpressionAdd&);
   void Visit(const ExpressionSub&);
@@ -49,9 +49,7 @@ class MainInterpreter : public Visitor {
   void Visit(const DeclarationMethod&);
   void Visit(const VariableDeclaration&);
   void Visit(const MethodDeclaration&);
-  void Visit(const TypeSimple&);
-  void Visit(const TypeArray&);
-  void Visit(const ArrayType&);
+  void Visit(const Type&);
   void Visit(const Formals&);
   void Visit(const MainClass&);
   void Visit(const StatementAssert&);
@@ -69,15 +67,17 @@ class MainInterpreter : public Visitor {
   void Visit(const MethodInvocation&);
   void Visit(const StatementList&);
   void Visit(const ExpressionNumber&);
-  void Visit(const SimpleType&);
   void Visit(const ArrayElementLValue&);
   void Visit(const SimpleLValue&);
 
  private:
-  Object tos_value_{};
-  bool returned_{false};
+  const FunctionManager& function_manager_;
+  const ClassManager& class_manager_;
+  SymbolTable table_;
   std::ostream& out_;
-  std::deque<ScopeLayer> layers_;
+  bool returned_{false};
+  std::vector<int> function_arguments_;
+  std::stack<std::string> waiting_type_;
 };
 
 } // namespace AST

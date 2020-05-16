@@ -20,7 +20,7 @@ const std::unique_ptr<Statement>& StatementIfFull::GetTrueBody() const {
   return true_body_;
 }
 
-const std::unique_ptr<Statement>& StatementIfFull::GetFlaseBody() const {
+const std::unique_ptr<Statement>& StatementIfFull::GetFalseBody() const {
   return flase_body_;
 }
 

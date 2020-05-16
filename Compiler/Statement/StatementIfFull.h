@@ -16,7 +16,7 @@ class StatementIfFull : public Statement {
 
   const std::unique_ptr<Statement>& GetTrueBody() const;
 
-  const std::unique_ptr<Statement>& GetFlaseBody() const;
+  const std::unique_ptr<Statement>& GetFalseBody() const;
 
  private:
   std::unique_ptr<Expression> condition_;

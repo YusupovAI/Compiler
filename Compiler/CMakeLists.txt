@@ -6,6 +6,7 @@ project(${PROJECT_NAME})
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -Wall")
 
 find_package(BISON REQUIRED)
 find_package(FLEX REQUIRED)
@@ -49,7 +50,8 @@ target_include_directories(
   Type
   Visitor
   Scopes
-  Object
+  Functions
+  Classes
 )
 
 target_sources(
@@ -108,16 +110,18 @@ target_sources(
   Statement/StatementVariableDeclaration.cpp
   Statement/StatementWhile.cpp
   Statement/StatementList.cpp
-  Type/ArrayType.cpp
-  Type/TypeArray.cpp
-  Type/TypeSimple.cpp
-  Type/SimpleType.cpp
+  Type/Type.cpp
   Expression/ExpressionNumber.cpp
   Visitor/TreePrinter.cpp
-  Visitor/MainInterpreter.cpp
-  Scopes/ScopeLayer.cpp
-  Object/Object.cpp
-  Object/BooleanValue.cpp
-  Object/IntegerValue.cpp
+  Visitor/Interpreter.cpp
+  Scopes/TypesScopeLayer.cpp
+  Scopes/SymbolTable.cpp
+  Functions/Function.cpp
+  Functions/FunctionManager.cpp
+  Functions/Stack.cpp
+  Classes/ClassManager.cpp
+  Visitor/ClassManagerCreator.cpp
+  Visitor/FunctionManagerCreator.cpp
+  Visitor/TypeChecker.cpp
   Visitor/TypeGetter.cpp
 )

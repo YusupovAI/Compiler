@@ -1,32 +1,33 @@
 #pragma once
 
 #include <string>
-#include <unordered_map>
-#include <optional>
-
-#include "Object.h"
+#include <map>
+#include <memory>
+#include <deque>
 
 class TypesScopeLayer {
  public:
   TypesScopeLayer() = default;
 
-  explicit ScopeLayer(ScopeLayer*);
+  TypesScopeLayer(TypesScopeLayer* parent);
 
   void DeclareVariable(const std::string& name, const std::string& typ);
 
-  bool HasValue(const std::string&) const;
-
   bool IsDeclared(const std::string&) const;
 
-  const std::string& GetType() const;
+  const std::string& GetType(const std::string&) const;
+
+  void Initialize(const std::string&);
+
+  bool IsInitialized(const std::string&) const;
+
+  TypesScopeLayer* GetParent() const;
 
  private:
-  ScopeLayer* GetNeeded(const std::string& name);
-
-  const ScopeLayer* GetNeeded(const std::string&) const;
+  const TypesScopeLayer* GetNeeded(const std::string& name) const;
 
  private:
-  std::unordered_map<std::string, std::string> types_:
+  std::map<std::string, std::pair<bool, std::string> > types_;
   TypesScopeLayer* parent_{nullptr};
 };
 

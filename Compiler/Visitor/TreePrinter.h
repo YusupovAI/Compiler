@@ -41,9 +41,6 @@ class TreePrinter : public Visitor {
   void Visit(const DeclarationMethod&);
   void Visit(const VariableDeclaration&);
   void Visit(const MethodDeclaration&);
-  void Visit(const TypeSimple&);
-  void Visit(const TypeArray&);
-  void Visit(const ArrayType&);
   void Visit(const Formals&);
   void Visit(const MainClass&);
   void Visit(const StatementAssert&);
@@ -61,8 +58,8 @@ class TreePrinter : public Visitor {
   void Visit(const MethodInvocation&);
   void Visit(const StatementList&);
   void Visit(const ExpressionNumber&);
-  void Visit(const SimpleType&);
   void Visit(const ArrayElementLValue&);
+  void Visit(const Type&);
   void Visit(const SimpleLValue&);
 
  private:

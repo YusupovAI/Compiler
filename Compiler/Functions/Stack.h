@@ -1,12 +1,24 @@
-//
-// Created by iusupov on 11.05.2020.
-//
+#pragma once
 
-#ifndef AST_FUNCTIONS_STACK_H_
-#define AST_FUNCTIONS_STACK_H_
+#include <vector>
 
 class Stack {
+ public:
+  static Stack MakeStack();
 
+  size_t Allocate(size_t size);
+
+  void BeginScope();
+
+  void EndScope();
+
+  char* GetPointer(size_t);
+
+ private:
+  std::vector<size_t> offsets_;
+  std::vector<char> buffer_;
+  size_t size_;
+  size_t capacity_;
+
+  Stack(size_t size, size_t capacity, std::vector<size_t> offsets, std::vector<char> buffer);
 };
-
-#endif //AST_FUNCTIONS_STACK_H_

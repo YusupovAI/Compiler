@@ -99,8 +99,8 @@ class Scanner;
 %nterm <std::unique_ptr<MainClass> > main_class;
 %nterm <std::unique_ptr<MethodDeclaration> > method_declaration;
 %nterm <std::unique_ptr<Type> > ttype;
-%nterm <std::unique_ptr<SimpleType> > simple_type;
-%nterm <std::unique_ptr<ArrayType> > array_type;
+%nterm <std::unique_ptr<Type> > simple_type;
+%nterm <std::unique_ptr<Type> > array_type;
 %nterm <std::unique_ptr<Statement> > statement;
 %nterm <std::unique_ptr<Formals> > formal_list;
 %nterm <std::unique_ptr<MethodInvocation> > method_invocation;
@@ -165,29 +165,29 @@ method_declaration:
 
 ttype:
   simple_type {
-    $$ = std::make_unique<TypeSimple>(std::move($1));
+    $$ = std::move($1);
   } |
   array_type {
-    $$ = std::make_unique<TypeArray>(std::move($1));
+    $$ = std::move($1);
   };
 
 simple_type:
   "int" {
-    $$ = std::make_unique<SimpleType>("int");
+    $$ = std::make_unique<Type>("int");
   } |
   "void" {
-    $$ = std::make_unique<SimpleType>("void");
+    $$ = std::make_unique<Type>("void");
   } |
   "boolean" {
-    $$ = std::make_unique<SimpleType>("boolean");
+    $$ = std::make_unique<Type>("boolean");
   } |
   "identifier" {
-    $$ = std::make_unique<SimpleType>(std::move($1));
+    $$ = std::make_unique<Type>(std::move($1));
   };
 
 array_type:
   simple_type "[]" {
-    $$ = std::make_unique<ArrayType>(std::move($1));
+    $$ = std::make_unique<Type>($1->GetType() + "[]");
   };
 
 formals:
