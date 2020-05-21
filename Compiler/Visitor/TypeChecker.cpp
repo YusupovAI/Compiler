@@ -133,15 +133,39 @@ void TypeChecker::Visit(const AST::ExpressionTrue &expr) {
   last_type_ = "boolean";
 }
 
-void TypeChecker::Visit(const AST::ExpressionArrayElement &) {}
+void TypeChecker::Visit(const AST::ExpressionArrayElement &elem) {
+  elem.GetIndex()->Accept(*this);
+  if (last_type_ != "int") {
+    throw std::logic_error("Array index should be an integer, but it is not");
+  }
+  elem.GetArray()->Accept(*this);
+  if (last_type_.back() != ']') {
+    throw std::logic_error("Expected an array, but it is not");
+  }
+//  delete last []
+  last_type_.pop_back();
+  last_type_.pop_back();
+}
 
-void TypeChecker::Visit(const AST::ExpressionLength &) {}
+void TypeChecker::Visit(const AST::ExpressionLength &expr) {
+  expr.GetLhs()->Accept(*this);
+  if (last_type_.back() != ']') {
+    throw std::logic_error("Trying to use length field of not an array");
+  }
+  last_type_ = "int";
+}
 
 void TypeChecker::Visit(const AST::ExpressionNewVariable &expr) {
   last_type_ = expr.GetTypeName();
 }
 
-void TypeChecker::Visit(const AST::ExpressionNewArray &) {}
+void TypeChecker::Visit(const AST::ExpressionNewArray &arr) {
+  arr.GetArraySize()->Accept(*this);
+  if (last_type_ != "int") {
+    throw std::logic_error("Array size should be integer");
+  }
+  last_type_ = arr.GetArrayType()->GetType();
+}
 
 void TypeChecker::Visit(const AST::ExpressionNot &expr) {
   expr.GetBoolExpression()->Accept(*this);
@@ -156,7 +180,18 @@ void TypeChecker::Visit(const AST::ExpressionBraces &expr) {
 }
 
 void TypeChecker::Visit(const AST::ExpressionVariable &var) {
-  last_type_ = scope_->GetType(var.GetVariableName());
+  if (scope_->IsDeclared(var.GetVariableName())) {
+    last_type_ = scope_->GetType(var.GetVariableName());
+    return;
+  }
+  if (current_class_.empty()) {
+    throw std::logic_error("Usage of undeclared variable " + var.GetVariableName());
+  }
+  auto& cl = class_manager_.GetClass(current_class_);
+  if (!cl.HasField(var.GetVariableName())) {
+    throw std::logic_error("Usage of undeclared variable " + var.GetVariableName());
+  }
+  last_type_ = cl.GetFieldType(var.GetVariableName());
 }
 
 void TypeChecker::Visit(const AST::ExpressionThis &expr) {
@@ -222,11 +257,11 @@ void TypeChecker::Visit(const AST::Formals &formals) {
     return;
   }
   scope_->DeclareVariable(formals.GetHeadName(), formals.GetHeadType()->GetType());
-  scope_->Initialize(formals.GetHeadName());
   formals.GetTail()->Accept(*this);
 }
 
 void TypeChecker::Visit(const AST::MainClass &cl) {
+  current_class_.clear();
   cl.GetStatements()->Accept(*this);
 }
 
@@ -297,9 +332,7 @@ void TypeChecker::Visit(const AST::StatementMethodInvocation &stmt) {
   stmt.GetMethod()->Accept(*this);
 }
 
-void TypeChecker::Visit(const AST::LValueSimple &lv) {
-  last_type_ = scope_->GetType(lv.GetLvalue()->GetVariableName());
-}
+void TypeChecker::Visit(const AST::LValueSimple &) {}
 
 void TypeChecker::Visit(const AST::LValueArrayElement &) {}
 

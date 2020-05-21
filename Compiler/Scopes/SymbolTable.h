@@ -8,9 +8,9 @@
 
 class SymbolTable {
  public:
-  void Put(const std::string& symbol, char* data, size_t len);
+  void Put(const std::string& symbol, char* data);
 
-  void CreateVariable(const std::string& symbol, const std::string& type, size_t len);
+  void CreateVariable(const std::string& symbol, const std::string& type, bool do_delete_);
 
   bool HasVariable(const std::string& symbol) const;
 
@@ -26,10 +26,21 @@ class SymbolTable {
 
   Stack& GetStack();
 
-  const std::string& GetType(const std::string var_name) const;
+  const std::string& GetVariableType(const std::string var_name) const;
 
  private:
-  std::unordered_map<std::string, std::vector<std::pair<size_t, std::string> > > values_;
+  void Destruct(const std::string& symbol);
+
+  struct SymbolInfo {
+    SymbolInfo(std::string, size_t , bool);
+
+    bool do_destruct_;
+    size_t offset_;
+    std::string type_;
+  };
+
+ private:
+  std::unordered_map<std::string, std::vector<SymbolInfo> > values_;
   std::vector<std::string> symbols_;
   Stack stack_;
 };

@@ -31,20 +31,6 @@ const TypesScopeLayer *TypesScopeLayer::GetNeeded(const std::string &name) const
   return nullptr;
 }
 
-bool TypesScopeLayer::IsInitialized(const std::string &name) const {
-  if (!IsDeclared(name)) {
-    throw std::logic_error("Variable " + name + " was not declared before usage");
-  }
-  return types_.find(name)->second.first;
-}
-
-void TypesScopeLayer::Initialize(const std::string &name) {
-  if (!IsDeclared((name))) {
-    throw std::logic_error("Variable " + name + " was not declared before usage");
-  }
-  types_.find(name)->second.first = true;
-}
-
 TypesScopeLayer *TypesScopeLayer::GetParent() const {
   return parent_;
 }

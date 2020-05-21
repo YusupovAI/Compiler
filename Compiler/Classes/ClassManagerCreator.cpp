@@ -65,18 +65,21 @@ void ClassManagerCreator::Visit(const ClassDeclarationList &list) {
 }
 
 void ClassManagerCreator::Visit(const ClassDeclarationSimple &decl) {
-  manager_.AddClass(decl.GetClassName());
+  decl.GetDeclarations()->Accept(*this);
+  manager_.AddClass(decl.GetClassName(), std::move(class_));
 }
 
 void ClassManagerCreator::Visit(const ClassDeclarationInheritted &) {}
 
-void ClassManagerCreator::Visit(const DeclarationList &) {}
+void ClassManagerCreator::Visit(const DeclarationList &list) {
+  class_ = Class::MakeClass(&list);
+}
 
-void ClassManagerCreator::Visit(const DeclarationVariable &) {}
+void ClassManagerCreator::Visit(const DeclarationVariable &decl) {}
 
 void ClassManagerCreator::Visit(const DeclarationMethod &) {}
 
-void ClassManagerCreator::Visit(const VariableDeclaration &) {}
+void ClassManagerCreator::Visit(const VariableDeclaration &decl) {}
 
 void ClassManagerCreator::Visit(const MethodDeclaration &) {}
 

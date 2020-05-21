@@ -76,8 +76,9 @@ class Interpreter : public Visitor {
   SymbolTable table_;
   std::ostream& out_;
   bool returned_{false};
-  std::vector<int> function_arguments_;
+  std::vector<int64_t> function_arguments_;
   std::stack<std::string> waiting_type_;
+  int64_t tos_value_;
 };
 
 } // namespace AST

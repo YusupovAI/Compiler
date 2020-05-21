@@ -1,0 +1,12 @@
+class MainClass {
+    public static void main() {
+        Kek z;
+        z = new Kek();
+        z.Wait(1, 2, 3);
+    }
+}
+class Kek {
+    public void Wait(int x, int y) {
+        System.out.println(x + y);
+    }
+}

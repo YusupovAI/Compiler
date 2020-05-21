@@ -6,10 +6,14 @@
 #include "FunctionManager.h"
 
 #include <string>
+#include "ClassManager.h"
 
 class TypeGetter : public AST::Visitor {
  public:
-  static std::string GetType(const AST::Expression& expr, const SymbolTable&, const FunctionManager&);
+  static std::string GetType(const AST::Expression &expr,
+                             const SymbolTable &,
+                             const FunctionManager &,
+                             const ClassManager &);
 
   void Visit(const AST::ExpressionAdd &) override;
   void Visit(const AST::ExpressionSub &) override;
@@ -64,10 +68,11 @@ class TypeGetter : public AST::Visitor {
   void Visit(const AST::Type &) override;
 
  private:
-  TypeGetter(const SymbolTable& table, const FunctionManager& manager);
+  TypeGetter(const SymbolTable &table, const FunctionManager &manager, const ClassManager &);
 
  private:
   std::string type_;
-  const SymbolTable& table_;
-  const FunctionManager& manager_;
+  const SymbolTable &table_;
+  const FunctionManager &function_manager_;
+  const ClassManager &class_manager_;
 };

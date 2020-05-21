@@ -56,6 +56,7 @@
    void Visit(const AST::ExpressionNumber&) override;
    void Visit(const AST::ArrayElementLValue&)override;
    void Visit(const AST::SimpleLValue&) override;
+   void Visit(const AST::Type&) override;
 
   private:
    const AST::VariableDeclaration* var_;

@@ -120,8 +120,11 @@ target_sources(
   Functions/FunctionManager.cpp
   Functions/Stack.cpp
   Classes/ClassManager.cpp
-  Visitor/ClassManagerCreator.cpp
   Visitor/FunctionManagerCreator.cpp
   Visitor/TypeChecker.cpp
   Visitor/TypeGetter.cpp
+  Core/SizeManager.cpp
+  Classes/Class.cpp
+  Classes/FieldVisitor.cpp
+  Classes/ClassManagerCreator.cpp
 )

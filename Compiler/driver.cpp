@@ -37,8 +37,8 @@ void Driver::Drive() {
 
   auto function_manager = FunctionManagerCreator::MakeFunctionManager(*program_);
   auto class_manager_ = ClassManagerCreator::MakeClassManager(*program_);
-  class_manager_.AddClass("int");
-  class_manager_.AddClass("boolean");
+  class_manager_.AddClass("int", Class());
+  class_manager_.AddClass("boolean", Class());
   TypeChecker checker(function_manager, class_manager_);
 
   program_->Accept(checker);

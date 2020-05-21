@@ -110,4 +110,6 @@ const AST::VariableDeclaration *FieldVisitor::GetVariable(const AST::Declaration
   FieldVisitor visitor;
   decl.Accept(visitor);
   return visitor.var_;
-};
+}
+
+void FieldVisitor::Visit(const AST::Type &) {};

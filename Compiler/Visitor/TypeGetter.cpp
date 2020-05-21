@@ -1,12 +1,18 @@
 #include "TypeGetter.h"
 
-std::string TypeGetter::GetType(const AST::Expression &expr, const SymbolTable& table, const FunctionManager& manager) {
-  TypeGetter getter(table, manager);
+std::string TypeGetter::GetType(const AST::Expression &expr,
+                                const SymbolTable &table,
+                                const FunctionManager &manager,
+                                const ClassManager &cl) {
+  TypeGetter getter(table, manager, cl);
   expr.Accept(getter);
   return std::move(getter.type_);
 }
 
-TypeGetter::TypeGetter(const SymbolTable& table, const FunctionManager& manager) : table_(table), manager_(manager){}
+TypeGetter::TypeGetter(const SymbolTable &table,
+                       const FunctionManager &function_manager,
+                       const ClassManager &class_manager)
+    : table_(table), function_manager_(function_manager), class_manager_(class_manager) {}
 
 void TypeGetter::Visit(const AST::ExpressionAdd &) {
   type_ = "int";
@@ -56,7 +62,9 @@ void TypeGetter::Visit(const AST::ExpressionTrue &) {
   type_ = "boolean";
 }
 
-void TypeGetter::Visit(const AST::ExpressionArrayElement &) {}
+void TypeGetter::Visit(const AST::ExpressionArrayElement &elem) {
+  elem.GetArray()->Accept(*this);
+}
 
 void TypeGetter::Visit(const AST::ExpressionLength &) {}
 
@@ -75,11 +83,16 @@ void TypeGetter::Visit(const AST::ExpressionBraces &expr) {
 }
 
 void TypeGetter::Visit(const AST::ExpressionVariable &var) {
-  type_ = table_.GetType(var.GetVariableName());
+  if (!table_.HasVariable(var.GetVariableName())) {
+    auto cl = table_.GetVariableType("this");
+    type_ = class_manager_.GetClass(cl).GetFieldType(var.GetVariableName());
+  } else {
+    type_ = table_.GetVariableType(var.GetVariableName());
+  }
 }
 
 void TypeGetter::Visit(const AST::ExpressionThis &) {
-  type_ = table_.GetType("this");
+  type_ = table_.GetVariableType("this");
 }
 
 void TypeGetter::Visit(const AST::ExpressionMethodInvocation &invoc) {
@@ -132,11 +145,13 @@ void TypeGetter::Visit(const AST::StatementMethodInvocation &) {}
 
 void TypeGetter::Visit(const AST::LValueSimple &) {}
 
-void TypeGetter::Visit(const AST::LValueArrayElement &) {}
+void TypeGetter::Visit(const AST::LValueArrayElement &lv) {
+  lv.GetLvalue()->Accept(*this);
+}
 
 void TypeGetter::Visit(const AST::MethodInvocation &invoc) {
   invoc.GetObject()->Accept(*this);
-  type_ = manager_.GetFunction(type_, invoc.GetMethodName()).GetReturningType();
+  type_ = function_manager_.GetFunction(type_, invoc.GetMethodName()).GetReturningType();
 }
 
 void TypeGetter::Visit(const AST::StatementList &) {}
@@ -145,8 +160,14 @@ void TypeGetter::Visit(const AST::ExpressionNumber &) {
   type_ = "int";
 }
 
-void TypeGetter::Visit(const AST::ArrayElementLValue &) {}
+void TypeGetter::Visit(const AST::ArrayElementLValue &lv) {
+  lv.GetArray()->Accept(*this);
+//  delete last []
+  type_.pop_back();
+  type_.pop_back();
+}
 
 void TypeGetter::Visit(const AST::SimpleLValue &) {}
 
 void TypeGetter::Visit(const AST::Type &) {}
+

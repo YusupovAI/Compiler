@@ -17,10 +17,6 @@ class TypesScopeLayer {
 
   const std::string& GetType(const std::string&) const;
 
-  void Initialize(const std::string&);
-
-  bool IsInitialized(const std::string&) const;
-
   TypesScopeLayer* GetParent() const;
 
  private:

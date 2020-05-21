@@ -2,6 +2,7 @@
 
 #include "Visitor.h"
 #include "ClassManager.h"
+#include "Class.h"
 
 namespace AST {
 
@@ -65,6 +66,7 @@ class ClassManagerCreator : public Visitor {
   ClassManagerCreator() = default;
 
  private:
+  Class class_;
   ClassManager manager_;
 };
 
