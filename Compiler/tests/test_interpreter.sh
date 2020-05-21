@@ -1,6 +1,6 @@
 #!/bin/bash
 cp ../AST AST
-for file in $(cat Interpreting)
+for file in $(ls Interpreting)
 do
-  ./AST $file -interpret
+  ./AST Interpreting/$file -interpret
 done

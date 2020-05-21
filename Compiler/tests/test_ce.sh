@@ -1,6 +1,6 @@
 #!/bin/bash
 cp ../AST AST
-for file in $(cat CE)
+for file in $(ls CE)
 do
-  ./AST $file
+  ./AST CE/$file
 done

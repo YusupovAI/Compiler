@@ -1,6 +1,6 @@
 #!/bin/bash
 cp ../AST AST
-for file in $(cat)
+for file in $(ls Printing)
 do
-  ./AST $file -print
+  ./AST Printing/$file -print
 done

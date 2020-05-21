@@ -9,6 +9,7 @@ class MainClass {
     while (1 > 0) {
       System.out.println(4);
     }
+    int variable;
     if (variable == 0) {
       System.out.println(5);
     }

@@ -7,6 +7,6 @@ class MainClass {
 }
 class TestClass {
   public int FunctionDefinition(int x) {
-    return y;
+    return x;
   }
 }
