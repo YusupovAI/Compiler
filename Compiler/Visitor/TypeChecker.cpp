@@ -240,10 +240,16 @@ void TypeChecker::Visit(const AST::DeclarationMethod &method) {
 }
 
 void TypeChecker::Visit(const AST::VariableDeclaration &decl) {
-  if (!class_manager_.HasClass(decl.GetVariableType()->GetType())) {
-    throw std::logic_error("Usage of incomplete type: " + decl.GetVariableType()->GetType());
+  std::string type_ = decl.GetVariableType()->GetType();
+  std::string t = type_;
+  if (type_.back() == ']') {
+    type_.pop_back();
+    type_.pop_back();
   }
-  scope_->DeclareVariable(decl.GetVariableName(), decl.GetVariableType()->GetType());
+  if (!class_manager_.HasClass(type_)) {
+    throw std::logic_error("Usage of incomplete type: " + type_);
+  }
+  scope_->DeclareVariable(decl.GetVariableName(), t);
 }
 
 void TypeChecker::Visit(const AST::MethodDeclaration &method) {

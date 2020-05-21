@@ -64,6 +64,8 @@ void TypeGetter::Visit(const AST::ExpressionTrue &) {
 
 void TypeGetter::Visit(const AST::ExpressionArrayElement &elem) {
   elem.GetArray()->Accept(*this);
+  type_.pop_back();
+  type_.pop_back();
 }
 
 void TypeGetter::Visit(const AST::ExpressionLength &) {}
@@ -72,7 +74,9 @@ void TypeGetter::Visit(const AST::ExpressionNewVariable &var) {
   type_ = var.GetTypeName();
 }
 
-void TypeGetter::Visit(const AST::ExpressionNewArray &) {}
+void TypeGetter::Visit(const AST::ExpressionNewArray &array) {
+  type_ = array.GetArrayType()->GetType() + "[]";
+}
 
 void TypeGetter::Visit(const AST::ExpressionNot &) {
   type_ = "boolean";
