@@ -1,0 +1,19 @@
+class MainClass {
+ public static void main() {
+    A x;
+    x = new A();
+    B y;
+    y = new B();
+    System.out.println(y.func(x.func(), x.func()));
+  }
+}
+class A {
+ public int func() {
+    return 1;
+  }
+}
+class B {
+ public int func(int x, int y) {
+    return x + y;
+  }
+}

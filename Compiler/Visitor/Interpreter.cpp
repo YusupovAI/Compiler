@@ -188,14 +188,15 @@ void Interpreter::Visit(const ExpressionMethodInvocation &exp) {
 }
 
 void Interpreter::Visit(const FunctionArguments &args) {
-  function_arguments_.clear();
   const FunctionArguments *cur = &args;
+  std::vector<int64_t> exprs;
   while (cur->GetHead() != nullptr) {
     std::string type_ = TypeGetter::GetType(*cur->GetHead().get(), table_, function_manager_, class_manager_);
     cur->GetHead()->Accept(*this);
-    function_arguments_.push_back(tos_value_);
+    exprs.push_back(tos_value_);
     cur = cur->GetTail().get();
   }
+  function_arguments_ = std::move(exprs);
 }
 
 void Interpreter::Visit(const Program &program) {
