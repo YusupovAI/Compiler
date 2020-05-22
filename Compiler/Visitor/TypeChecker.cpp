@@ -1,17 +1,17 @@
 #include "TypeChecker.h"
 
-TypeChecker::TypeChecker(const FunctionManager& manager, const ClassManager& cl)
-: function_manager_(manager),
-scope_(std::make_unique<TypesScopeLayer>()),
-class_manager_(cl) {}
+TypeChecker::TypeChecker(const FunctionManager &manager, const ClassManager &cl)
+    : function_manager_(manager),
+      scope_(std::make_unique<TypesScopeLayer>()),
+      class_manager_(cl) {}
 
 void TypeChecker::Visit(const AST::ExpressionAdd &expr) {
   expr.GetLeft()->Accept(*this);
-  if (last_type_ != "int") {
+  if (last_type_ != "int" && last_type_ != "boolean") {
     throw std::logic_error("Non integer usage in + expression");
   }
   expr.GetRight()->Accept(*this);
-  if (last_type_ != "int") {
+  if (last_type_ != "int" && last_type_ != "boolean") {
     throw std::logic_error("Non integer usage in + expression");
   }
   last_type_ = "int";
@@ -19,11 +19,11 @@ void TypeChecker::Visit(const AST::ExpressionAdd &expr) {
 
 void TypeChecker::Visit(const AST::ExpressionSub &expr) {
   expr.GetLeft()->Accept(*this);
-  if (last_type_ != "int") {
+  if (last_type_ != "int" && last_type_ != "boolean") {
     throw std::logic_error("Non integer usage in - expression");
   }
   expr.GetRight()->Accept(*this);
-  if (last_type_ != "int") {
+  if (last_type_ != "int" && last_type_ != "boolean") {
     throw std::logic_error("Non integer usage in - expression");
   }
   last_type_ = "int";
@@ -31,11 +31,11 @@ void TypeChecker::Visit(const AST::ExpressionSub &expr) {
 
 void TypeChecker::Visit(const AST::ExpressionMul &expr) {
   expr.GetLeft()->Accept(*this);
-  if (last_type_ != "int") {
+  if (last_type_ != "int" && last_type_ != "boolean") {
     throw std::logic_error("Non integer usage in * expression");
   }
   expr.GetRight()->Accept(*this);
-  if (last_type_ != "int") {
+  if (last_type_ != "int" && last_type_ != "boolean") {
     throw std::logic_error("Non integer usage in * expression");
   }
   last_type_ = "int";
@@ -43,11 +43,11 @@ void TypeChecker::Visit(const AST::ExpressionMul &expr) {
 
 void TypeChecker::Visit(const AST::ExpressionDiv &expr) {
   expr.GetLeft()->Accept(*this);
-  if (last_type_ != "int") {
+  if (last_type_ != "int" && last_type_ != "boolean") {
     throw std::logic_error("Non integer usage in / expression");
   }
   expr.GetRight()->Accept(*this);
-  if (last_type_ != "int") {
+  if (last_type_ != "int" && last_type_ != "boolean") {
     throw std::logic_error("Non integer usage in / expression");
   }
   last_type_ = "int";
@@ -55,35 +55,35 @@ void TypeChecker::Visit(const AST::ExpressionDiv &expr) {
 
 void TypeChecker::Visit(const AST::ExpressionAnd &expr) {
   expr.GetLeft()->Accept(*this);
-  if (last_type_ != "boolean") {
-    throw std::logic_error("Non boolean usage in and expression");
+  if (last_type_ != "int" && last_type_ != "boolean") {
+    throw std::logic_error("Non integer usage in && expression");
   }
   expr.GetRight()->Accept(*this);
-  if (last_type_ != "boolean") {
-    throw std::logic_error("Non boolean usage in and expression");
+  if (last_type_ != "int" && last_type_ != "boolean") {
+    throw std::logic_error("Non integer usage in && expression");
   }
   last_type_ = "boolean";
 }
 
 void TypeChecker::Visit(const AST::ExpressionOr &expr) {
   expr.GetLeft()->Accept(*this);
-  if (last_type_ != "boolean") {
-    throw std::logic_error("Non boolean usage in or expression");
+  if (last_type_ != "int" && last_type_ != "boolean") {
+    throw std::logic_error("Non integer usage in || expression");
   }
   expr.GetRight()->Accept(*this);
-  if (last_type_ != "boolean") {
-    throw std::logic_error("Non boolean usage in or expression");
+  if (last_type_ != "int" && last_type_ != "boolean") {
+    throw std::logic_error("Non integer usage in || expression");
   }
   last_type_ = "boolean";
 }
 
 void TypeChecker::Visit(const AST::ExpressionEqual &expr) {
   expr.GetLeft()->Accept(*this);
-  if (last_type_ != "int") {
+  if (last_type_ != "int" && last_type_ != "boolean") {
     throw std::logic_error("Non integer usage in == expression");
   }
   expr.GetRight()->Accept(*this);
-  if (last_type_ != "int") {
+  if (last_type_ != "int" && last_type_ != "boolean") {
     throw std::logic_error("Non integer usage in == expression");
   }
   last_type_ = "boolean";
@@ -91,36 +91,36 @@ void TypeChecker::Visit(const AST::ExpressionEqual &expr) {
 
 void TypeChecker::Visit(const AST::ExpressionMod &expr) {
   expr.GetLeft()->Accept(*this);
-  if (last_type_ != "int") {
-    throw std::logic_error("Non integer usage in % expression");
+  if (last_type_ != "int" && last_type_ != "boolean") {
+    throw std::logic_error("Non integer usage in + expression");
   }
   expr.GetRight()->Accept(*this);
-  if (last_type_ != "int") {
-    throw std::logic_error("Non integer usage in % expression");
+  if (last_type_ != "int" && last_type_ != "boolean") {
+    throw std::logic_error("Non integer usage in + expression");
   }
   last_type_ = "int";
 }
 
 void TypeChecker::Visit(const AST::ExpressionLess &expr) {
   expr.GetLeft()->Accept(*this);
-  if (last_type_ != "int") {
-    throw std::logic_error("Non integer usage in < expression");
+  if (last_type_ != "int" && last_type_ != "boolean") {
+    throw std::logic_error("Non integer usage in + expression");
   }
   expr.GetRight()->Accept(*this);
-  if (last_type_ != "int") {
-    throw std::logic_error("Non integer usage in < expression");
+  if (last_type_ != "int" && last_type_ != "boolean") {
+    throw std::logic_error("Non integer usage in + expression");
   }
   last_type_ = "boolean";
 }
 
 void TypeChecker::Visit(const AST::ExpressionGreater &expr) {
   expr.GetLeft()->Accept(*this);
-  if (last_type_ != "int") {
-    throw std::logic_error("Non integer usage in > expression");
+  if (last_type_ != "int" && last_type_ != "boolean") {
+    throw std::logic_error("Non integer usage in + expression");
   }
   expr.GetRight()->Accept(*this);
-  if (last_type_ != "int") {
-    throw std::logic_error("Non integer usage in > expression");
+  if (last_type_ != "int" && last_type_ != "boolean") {
+    throw std::logic_error("Non integer usage in + expression");
   }
   last_type_ = "boolean";
 }
@@ -135,7 +135,7 @@ void TypeChecker::Visit(const AST::ExpressionTrue &expr) {
 
 void TypeChecker::Visit(const AST::ExpressionArrayElement &elem) {
   elem.GetIndex()->Accept(*this);
-  if (last_type_ != "int") {
+  if (last_type_ != "int" && last_type_ != "boolean") {
     throw std::logic_error("Array index should be an integer, but it is not");
   }
   elem.GetArray()->Accept(*this);
@@ -161,7 +161,7 @@ void TypeChecker::Visit(const AST::ExpressionNewVariable &expr) {
 
 void TypeChecker::Visit(const AST::ExpressionNewArray &arr) {
   arr.GetArraySize()->Accept(*this);
-  if (last_type_ != "int") {
+  if (last_type_ != "int" && last_type_ != "boolean") {
     throw std::logic_error("Array size should be integer");
   }
   last_type_ = arr.GetArrayType()->GetType();
@@ -169,7 +169,7 @@ void TypeChecker::Visit(const AST::ExpressionNewArray &arr) {
 
 void TypeChecker::Visit(const AST::ExpressionNot &expr) {
   expr.GetBoolExpression()->Accept(*this);
-  if (last_type_ != "boolean") {
+  if (last_type_ != "boolean" && last_type_ != "int") {
     throw std::logic_error("Not boolean usage in not expression");
   }
   last_type_ = "boolean";
@@ -187,7 +187,7 @@ void TypeChecker::Visit(const AST::ExpressionVariable &var) {
   if (current_class_.empty()) {
     throw std::logic_error("Usage of undeclared variable " + var.GetVariableName());
   }
-  auto& cl = class_manager_.GetClass(current_class_);
+  auto &cl = class_manager_.GetClass(current_class_);
   if (!cl.HasField(var.GetVariableName())) {
     throw std::logic_error("Usage of undeclared variable " + var.GetVariableName());
   }
@@ -273,7 +273,7 @@ void TypeChecker::Visit(const AST::MainClass &cl) {
 
 void TypeChecker::Visit(const AST::StatementAssert &stmt) {
   stmt.GetInnerExpression()->Accept(*this);
-  if (last_type_ != "boolean") {
+  if (last_type_ != "boolean" && last_type_ != "int") {
     throw std::logic_error("Non boolean usage in assert");
   }
 }
@@ -291,7 +291,7 @@ void TypeChecker::Visit(const AST::StatementNewScope &new_scope) {
 
 void TypeChecker::Visit(const AST::StatementIfReduced &stmt) {
   stmt.GetCondition()->Accept(*this);
-  if (last_type_ != "boolean") {
+  if (last_type_ != "boolean" && last_type_ != "int") {
     throw std::logic_error("Non boolean usage in if statement");
   }
   stmt.GetBody()->Accept(*this);
@@ -299,7 +299,7 @@ void TypeChecker::Visit(const AST::StatementIfReduced &stmt) {
 
 void TypeChecker::Visit(const AST::StatementIfFull &stmt) {
   stmt.GetCondition()->Accept(*this);
-  if (last_type_ != "boolean") {
+  if (last_type_ != "boolean" && last_type_ != "int") {
     throw std::logic_error("Non boolean usage in if statement");
   }
   stmt.GetTrueBody()->Accept(*this);
@@ -308,7 +308,7 @@ void TypeChecker::Visit(const AST::StatementIfFull &stmt) {
 
 void TypeChecker::Visit(const AST::StatementWhile &stmt) {
   stmt.GetCondition()->Accept(*this);
-  if (last_type_ != "boolean") {
+  if (last_type_ != "boolean" && last_type_ != "int") {
     throw std::logic_error("Non boolean usage in if statement");
   }
   stmt.GetBody()->Accept(*this);
@@ -316,7 +316,7 @@ void TypeChecker::Visit(const AST::StatementWhile &stmt) {
 
 void TypeChecker::Visit(const AST::StatementPrint &stmt) {
   stmt.GetInnerExpression()->Accept(*this);
-  if (last_type_ != "int") {
+  if (last_type_ != "int" && last_type_ != "boolean") {
     throw std::logic_error("Non int usage in print");
   }
 }
@@ -325,7 +325,8 @@ void TypeChecker::Visit(const AST::StatementAssignment &stmt) {
   stmt.GetRhs()->Accept(*this);
   std::string rhs_type = last_type_;
   stmt.GetLhs()->Accept(*this);
-  if (last_type_ != rhs_type) {
+  if (last_type_ != rhs_type
+      && ((last_type_ != "int" && last_type_ != "boolean") || (rhs_type != "int" && rhs_type != "boolean"))) {
     throw std::logic_error("Types mismatch in assignment");
   }
 }
@@ -344,15 +345,15 @@ void TypeChecker::Visit(const AST::LValueArrayElement &) {}
 
 void TypeChecker::Visit(const AST::MethodInvocation &invoc) {
   invoc.GetObject()->Accept(*this);
-  const Function& func = function_manager_.GetFunction(last_type_, invoc.GetMethodName());
-  auto& types = func.GetTypes();
-  auto* args = invoc.GetArguments().get();
-  for (auto& t:types) {
+  const Function &func = function_manager_.GetFunction(last_type_, invoc.GetMethodName());
+  auto &types = func.GetTypes();
+  auto *args = invoc.GetArguments().get();
+  for (auto &t:types) {
     if (args->GetHead() == nullptr) {
       throw std::logic_error("Not enough arguments in " + invoc.GetMethodName());
     }
     args->GetHead()->Accept(*this);
-    if (last_type_ != t) {
+    if (last_type_ != t && ((last_type_ != "int" && last_type_ != "boolean") || (t != "int" && t != "boolean"))) {
       throw std::logic_error("Type mismatch in " + invoc.GetMethodName());
     }
     args = args->GetTail().get();
