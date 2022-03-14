@@ -1,0 +1,15 @@
+class MainClass {
+ public static void main() {
+    System.out.println(new First().func().func());
+ }
+}
+class First {
+  public Second func() {
+    return new Second();
+  }
+}
+class Second {
+  public int func() {
+    return 100;
+  }
+}

@@ -1,0 +1,31 @@
+class MainClass {
+    public static void main() {
+        int[] x;
+        x = new int[10];
+        {
+            int i;
+            i = 0;
+            while (i < x.length) {
+                x[i] = i;
+                i = i + 1;
+            }
+        }
+        {
+            int i;
+            i = 0;
+            while (i < x.length) {
+                System.out.println(x[i]);
+                i = i + 1;
+            }
+        }
+        Kek[] y;
+        y = new Kek[2];
+        y[1] = new Kek();
+        y[1].PrintOne();
+    }
+}
+class Kek {
+    public void PrintOne() {
+        System.out.println(1);
+    }
+}

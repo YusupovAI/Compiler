@@ -1,0 +1,17 @@
+class MainClass {
+    public static void main() {
+        Kek x;
+        x = new Kek();
+        x.Wait(new Kek());
+    }
+}
+class Kek {
+    public void Wait(GoodKek x) {
+        x.PrintOne();
+    }
+}
+class GoodKek {
+    public void PrintOne() {
+        System.out.println(1);
+    }
+}

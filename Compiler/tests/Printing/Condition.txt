@@ -1,0 +1,17 @@
+class MainClass {
+  public static void main() {
+    if (1 > 0 || 3 == 2)
+      System.out.println(1);
+    else if (true && false) 
+      System.out.println(2);
+    else 
+      System.out.println(3);
+    while (1 > 0) {
+      System.out.println(4);
+    }
+    int variable;
+    if (variable == 0) {
+      System.out.println(5);
+    }
+  }
+}

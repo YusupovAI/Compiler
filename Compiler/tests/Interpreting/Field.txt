@@ -1,0 +1,21 @@
+class MainClass {
+    public static void main() {
+        Kek z;
+        z = new Kek();
+        z.SetX(10);
+        Kek w;
+        w = new Kek();
+        w.SetX(12);
+        System.out.println(z.GetX());
+        System.out.println(w.GetX());
+    }
+}
+class Kek {
+int x_;
+public void SetX(int x) {
+    x_ = x;
+}
+public int GetX() {
+    return x_;
+}
+}

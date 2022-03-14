@@ -1,0 +1,9 @@
+class Main {
+public static void main() {
+    int x;
+    int y;
+    y = 10 + 2;
+    int x;
+}
+
+}

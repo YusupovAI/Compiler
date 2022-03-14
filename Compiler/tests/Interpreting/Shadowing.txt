@@ -1,0 +1,13 @@
+class Main {
+public static void main() {
+    int x;
+    x = 10;
+    System.out.println(x);
+    {
+        int x;
+        x = 12;
+        System.out.println(x);
+    }
+}
+
+}

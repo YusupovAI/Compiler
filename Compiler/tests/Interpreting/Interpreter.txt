@@ -1,0 +1,34 @@
+class MainClass {
+  public static void main() {
+    int x;
+    int y;
+    x = 1;
+    y = 2;
+    int z;
+    z = x + 2;
+    System.out.println(z);
+    x = y - z;
+    System.out.println(x);
+    x = 0;
+    while(x < 5) {
+      System.out.println(x);
+      x = x + 1;
+      int x;
+      x = 10;
+      Kek z;
+      z = new Kek();
+      System.out.println(z.Wait());
+    }
+    if (!(x == 0)) {
+      System.out.println(10 + 2);
+    }
+  }
+}
+class Kek {
+ public int Wait() {
+    return this.Wait2(100);
+ }
+ public int Wait2(int x) {
+    return x;
+ }
+}
